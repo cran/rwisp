@@ -1,5 +1,7 @@
 # Implementation in R of the WISP Multiple Criteria Sorting Method
 
+[![CRAN release](https://www.r-pkg.org/badges/version/rwisp)](https://cran.r-project.org/package=rwisp)
+
 This project consists of the implementation of the method in R, its tests, the CRAN package and a web application written in R Shiny.
 
 If you just want to run the method by reading the data contained in a CSV file, use the application hosted at shinyapps.io.
@@ -15,26 +17,26 @@ Abstract: Until now, many different multiple criteria decision-making methods ha
 
 ### Option 1 - Without installing by entering the data
 - git clone https://github.com/dioubernardo/rwisp/
-- open test.r 
+- edit test.r 
 - add your data and run
 
 ### Option 2 - Without installing reading data from a CSV
 - git clone https://github.com/dioubernardo/rwisp/
-- open test-csv.r
+- edit test-csv.r
 - change the CSV file path to your data or edit test.csv and include your data
 
 ### Option 3 - Install from github
 ```
-library(devtools);
+library("devtools");
 install_github("dioubernardo/rwisp");
-library('rwisp')
+library("rwisp")
 ...
 ```
 
-### Option 3 - Install from CRAN (Waiting for CRAN acceptance)
+### Option 3 - Install from CRAN
 ```
-install.packages('rwisp')
-library('rwisp')
+install.packages("rwisp")
+library("rwisp")
 ...
 ```
 

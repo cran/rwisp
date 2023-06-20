@@ -1,7 +1,8 @@
 #' Integrated Simple Weighted Sum Product Method - WISP
 #' 
 #' Implementation of An Integrated Simple Weighted Sum Product Method - WISP
-#' more information see https://doi.org/10.1109/TEM.2021.3075783
+#' More information about the method at https://doi.org/10.1109/TEM.2021.3075783
+#' More information about the implementation at https://github.com/dioubernardo/rwisp/blob/main/README.md
 #' 
 #' @importFrom utils count.fields read.csv read.csv2
 #' @param data A numeric data matrix, columns are the criteria, rows are the alternatives
@@ -24,8 +25,8 @@
 wispcalc <- function(data, alternatives, optimizations, weights) {
   tryCatch({
     
-    imax = nrow(data)
-    jmax = ncol(data)
+    imax <- nrow(data)
+    jmax <- ncol(data)
     
     # optimizations validation
     hascriteriamin <- FALSE
@@ -49,8 +50,8 @@ wispcalc <- function(data, alternatives, optimizations, weights) {
 
     # normalization
     normalizedData <- matrix(0, imax, jmax)
-    colnames(normalizedData) = paste("C", 1:jmax, sep="")
-    rownames(normalizedData) = alternatives
+    colnames(normalizedData) <- paste("C", 1:jmax, sep="")
+    rownames(normalizedData) <- alternatives
     for (j in 1:jmax) {
       max <- max(data[, j])
       for (i in 1:imax) {
@@ -82,8 +83,8 @@ wispcalc <- function(data, alternatives, optimizations, weights) {
         }
       }
       
-      uiwsd[i] = uiwsdmax - uiwsdmin
-      uiwpd[i] = uiwpdmax - uiwpdmin
+      uiwsd[i] <- uiwsdmax - uiwsdmin
+      uiwpd[i] <- uiwpdmax - uiwpdmin
       
       if (hascriteriamin == FALSE){
         uiwsdmin <- 1
@@ -94,8 +95,8 @@ wispcalc <- function(data, alternatives, optimizations, weights) {
         uiwpdmax <- 1
       }
       
-      uiwsr[i] = uiwsdmax / uiwsdmin
-      uiwpr[i] = uiwpdmax / uiwpdmin
+      uiwsr[i] <- uiwsdmax / uiwsdmin
+      uiwpr[i] <- uiwpdmax / uiwpdmin
     }
     
     # recalcular utilidades
@@ -110,18 +111,18 @@ wispcalc <- function(data, alternatives, optimizations, weights) {
     uiwprmax <- max(uiwpr)
     
     for (i in 1:imax) {
-      u2iwsd[i] <- uiwsd[i] / (1 + uiwsdmax)
-      u2iwpd[i] <- uiwpd[i] / (1 + uiwpdmax)
-      u2iwsr[i] <- uiwsr[i] / (1 + uiwsrmax)
-      u2iwpr[i] <- uiwpr[i] / (1 + uiwprmax)
+      u2iwsd[i] <- (1 + uiwsd[i]) / (1 + uiwsdmax)
+      u2iwpd[i] <- (1 + uiwpd[i]) / (1 + uiwpdmax)
+      u2iwsr[i] <- (1 + uiwsr[i]) / (1 + uiwsrmax)
+      u2iwpr[i] <- (1 + uiwpr[i]) / (1 + uiwprmax)
     }
 
-    # utilidade global
+    # utility global
     ui <- matrix(0, imax, 2)
     colnames(ui) <- c('position','ui')
-    rownames(ui) = alternatives
+    rownames(ui) <- alternatives
     for (i in 1:imax) {
-      ui[i,2] = (u2iwsd[i] +  u2iwpd[i] +  u2iwsr[i] +  u2iwpr[i]) / 4
+      ui[i,2] <- (u2iwsd[i] +  u2iwpd[i] +  u2iwsr[i] +  u2iwpr[i]) / 4
     }
     ui <- ui[order(as.numeric(ui[,2]), decreasing = TRUE), ]
     ui[,1] <- c(1:imax)
@@ -129,7 +130,7 @@ wispcalc <- function(data, alternatives, optimizations, weights) {
     # utilities matrix
     utilities <- matrix(c(uiwsd, uiwpd, uiwsr, uiwpr, u2iwsd, u2iwpd, u2iwsr, u2iwpr), imax, 8)
     colnames(utilities) <- c('uiwsd', 'uiwpd', 'uiwsr', 'uiwpr', 'u2iwsd', 'u2iwpd', 'u2iwsr', 'u2iwpr')
-    rownames(utilities) = alternatives
+    rownames(utilities) <- alternatives
     
     return(list("ui" = ui, "normalizedData" = normalizedData, "utilities" = utilities))
   },
@@ -164,14 +165,14 @@ rwispfromcsv <- function(file){
     }
 
     if (tolower(csv[1,1]) != 'criteria')
-      stop('Non-standard file the first line must contain the criteria, see example file')
+      stop("This file is out of standards. The first line must contain the criteria. See the example file.")
     if (tolower(csv[2,1]) != 'optimization')
-      stop('Non-standard file the second line must contain the optimization, see example file')
+      stop("This file is out of standards. The second line must contain the optimizations. See the example file.")
     if (tolower(csv[3,1]) != 'weight')
-      stop('Non-standard file the third line must contain the weights, see example file')
+      stop("This file is out of standards. The third line must contain the weights. See the example file.")
     if (csv[4,1] != '')
-      stop('Non-default file the fourth line must be empty, see example file')
-
+      stop("This file is out of standards. The fourth line must be empty. See the example file.")
+    
     ncriteria <- ncol(csv) - 1
     nalternatives <- nrow(csv) - 4
     

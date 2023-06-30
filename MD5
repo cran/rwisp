@@ -1,6 +1,10 @@
-b84af8f25b69636d639e8a5bc343ea54 *DESCRIPTION
+ce06052b435123e7489f844d98f01220 *DESCRIPTION
 1e8685424e51aa95cac059fb2fd397d6 *NAMESPACE
-4f09cfb3757abd1aaee4364db4b6b8bb *R/rwisp.r
-9f51f62a666106ca906caf2ea7ca1a27 *README.md
-cbc94f33af1fb3de5c6e9d3f68908f20 *man/rwispfromcsv.Rd
-72cb81609dc039a4823dc390c363f6e6 *man/wispcalc.Rd
+3c1303197430088a788827bec04e01c8 *R/rwisp.r
+85e6574725509dd47079acbd3d261e5e *README.md
+0d4f504b35778dc5334fc989668edea4 *inst/extdata/example.csv
+50e71b11d0171f3ec37a9beeb3e23a6c *inst/extdata/example2.csv
+279d9e61e9dd697ace8c5b0e6af681fe *man/rwispfromcsv.Rd
+b795dac155358ae4625a6e094dd62312 *man/wispcalc.Rd
+4e409d41f0396460973c02167b9fccdd *tests/testthat.R
+2caf5b2542a6ab32df14de37a827eddc *tests/testthat/test-rwisp.R
